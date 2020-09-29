@@ -19,6 +19,7 @@ django-storages = "*"
 pillow = "*"
 django-guardian = "*"
 django-allauth = "*"
+django-crispy-forms = "*"
 
 [requires]
 python_version = "3.7"

@@ -20,10 +20,11 @@ INSTALLED_APPS = [
     'guardian',
 
     'django.contrib.sites',
-
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+
+    'crispy_forms',
 
     # own
     'core',
@@ -73,13 +74,16 @@ AUTH_USER_MODEL = "core.User"
 
 # Djanga allauth
 SITE_ID = 1
-LOGIN_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = 'home'
+REGISTER_REDIRECT_URL = 'home'
 ACCOUNT_EMAIL_VERIFICATION = None
-ACCOUNT_USER_MODEL_USERNAME_FIELD = None
 ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 
+
+# Crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_files')]

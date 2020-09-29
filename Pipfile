@@ -17,6 +17,8 @@ django-environ = "*"
 boto3 = "*"
 django-storages = "*"
 pillow = "*"
+django-guardian = "*"
+django-allauth = "*"
 
 [requires]
 python_version = "3.7"

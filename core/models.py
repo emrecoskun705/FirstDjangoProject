@@ -16,6 +16,7 @@ class Column(models.Model):
     workers = models.ManyToManyField(User, related_name='workers')
     subscribers = models.ManyToManyField(User, related_name='subscribers')
 
+
     class Meta:
         permissions = (
             ('create_post', 'Create Post'),

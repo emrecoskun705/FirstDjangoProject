@@ -5,4 +5,6 @@ from .models import User,Column,Post
 class UserAdmin(admin.ModelAdmin):
     list_display = ('email',)
 admin.site.register(Column)
+
+
 admin.site.register(Post)

@@ -30,6 +30,7 @@ class Column(models.Model):
 class Post(models.Model):
     heading = models.CharField(max_length=50)
     content = models.TextField(max_length=500)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField()
     publish_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)

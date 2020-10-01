@@ -28,8 +28,10 @@ class PostFormView(FormView):
     form_class = PostForm
     success_url = '/'
 
-    def form_valid(self, form):
-        if form.is_valid():
-            form.save()
+    def form_valid(self, form):        
+        post = form.save(commit=False)
+        post.author = self.request.user
+        post.save()
+        
         return super().form_valid(form)
     

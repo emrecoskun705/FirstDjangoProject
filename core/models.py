@@ -9,9 +9,21 @@ class User(AbstractUser):
     coordinator = models.BooleanField(default=False)
 
 
+class Post(models.Model):
+    heading = models.CharField(max_length=50)
+    content = models.TextField(max_length=500)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    image = models.ImageField()
+    publish_date = models.DateTimeField(auto_now_add=True)
+    update_date = models.DateTimeField(auto_now=True)
+
+
+    def __str__(self):
+        return self.heading
+
 class Column(models.Model):
     title = models.CharField(max_length=50)
-    posts = models.ManyToManyField('Post')
+    posts = models.ManyToManyField(Post,  related_name="posts")
     coordinator = models.ForeignKey(User, on_delete=models.CASCADE)
     workers = models.ManyToManyField(User, related_name='workers')
     subscribers = models.ManyToManyField(User, related_name='subscribers')
@@ -25,18 +37,3 @@ class Column(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class Post(models.Model):
-    heading = models.CharField(max_length=50)
-    content = models.TextField(max_length=500)
-    author = models.ForeignKey(User, on_delete=models.CASCADE)
-    image = models.ImageField()
-    publish_date = models.DateTimeField(auto_now_add=True)
-    update_date = models.DateTimeField(auto_now=True)
-
-
-    def __str__(self):
-        return self.heading
-
-

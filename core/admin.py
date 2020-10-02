@@ -3,7 +3,7 @@ from .models import User,Column,Post
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
-    list_display = ('email',)
+    list_display = ('id', 'email',)
 admin.site.register(Column)
 
 

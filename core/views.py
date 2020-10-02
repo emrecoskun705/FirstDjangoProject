@@ -16,12 +16,11 @@ class ColumnFormView(FormView):
     success_url = '/'
 
     def form_valid(self, form):
-        
         column = form.save(commit=False)
         column.coordinator = self.request.user
         column.save()
-
-        return super().form_valid(form)
+        
+        return super().form_valid(column)
         
 class PostFormView(FormView):
     template_name = 'post_form.html'
@@ -33,5 +32,5 @@ class PostFormView(FormView):
         post.author = self.request.user
         post.save()
         
-        return super().form_valid(form)
+        return super().form_valid(post)
     

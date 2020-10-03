@@ -14,7 +14,8 @@
     </div>
   </div>
 
-  {% for column in column_list %}    
+  {% for column in column_list %}
+    <h2 class="text-center">{{column.title}}</h2>    
   <div id="carouselExampleIndicators" class="carousel slide pause" style="padding: 0 4rem" data-ride="carousel">
     <ol class="carousel-indicators">
       <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -24,10 +25,11 @@
        
     <div class="carousel-inner px-20">
     {% for post in column.posts.all %}  
+      {% if forloop.counter0 == 0 %}
       <div class="carousel-item active">
         <div class="row">
           <div class="col-lg-9 col-md-6">
-            <h2>{{ post.heading }}</h2>
+            <h3>{{ post.heading }}</h3>
             <p >{{ post.content }}</p>
             <p>{{ post.author.username }}</p>
             <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
@@ -35,6 +37,20 @@
           <div class="col-lg-3 col-md-6"><img class=" "  src="https://picsum.photos/200" alt="First slide"></div>
         </div>   
       </div>
+      {% else %}
+      <div class="carousel-item ">
+        <div class="row">
+          <div class="col-lg-9 col-md-6">
+            <h3>{{ post.heading }}</h3>
+            <p >{{ post.content }}</p>
+            <p>{{ post.author.username }}</p>
+            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+          </div>
+          <div class="col-lg-3 col-md-6"><img class=" "  src="https://picsum.photos/200" alt="First slide"></div>
+        </div>   
+      </div>
+      {% endif %}
+      
     {% endfor %}
     </div>
     
@@ -48,6 +64,7 @@
       </a>
     
     <hr>
+    </div>
     {% endfor %}
 
 

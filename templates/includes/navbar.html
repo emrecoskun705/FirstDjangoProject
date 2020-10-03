@@ -6,6 +6,19 @@
 
   <div class="collapse navbar-collapse" id="navbarsExampleDefault">
     <ul class="navbar-nav mr-auto">
+
+      <!--<li class="nav-item">
+        <a class="nav-link" href="{% url 'column-create' %}" >Column Create</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="{% url 'post-create' %}" >Post Create</a>
+      </li> -->
+    </ul>
+    <form class="form-inline my-2 my-lg-0 ">
+          <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+    <ul class="navbar-nav ml-auto">
       {% if not request.user.is_authenticated %}
       <li class="nav-item active">
         <a class="nav-link" href="{% url 'account_login' %}">Sign In</a>
@@ -15,19 +28,12 @@
       </li>
       {% else %}
       <li class="nav-item">
+        <a class="nav-link" href="{% url 'account-profile' id=request.user.id %}">Account</a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'account_logout' %}" >Logout</a>
       </li>
       {% endif %}
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'column-create' %}" >Column Create</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="{% url 'post-create' %}" >Post Create</a>
-      </li>
     </ul>
-    <form class="form-inline my-2 my-lg-0">
-      <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-    </form>
   </div>
 </nav>

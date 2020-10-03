@@ -27,7 +27,7 @@ class Column(models.Model):
     coordinator = models.ForeignKey(User, on_delete=models.CASCADE)
     workers = models.ManyToManyField(User, related_name='workers')
     subscribers = models.ManyToManyField(User, related_name='subscribers')
-
+     
 
     class Meta:
         permissions = (

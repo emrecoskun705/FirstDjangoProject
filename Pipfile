@@ -20,6 +20,7 @@ pillow = "*"
 django-guardian = "*"
 django-allauth = "*"
 django-crispy-forms = "*"
+pylint-django = "*"
 
 [requires]
 python_version = "3.7"

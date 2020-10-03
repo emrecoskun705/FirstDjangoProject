@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/profile.css' %}">
+<div class="bg-white">
+
+  <div class="container">
+    <div class="d-flex justify-content-between align-items-center py-4">
+      <div>
+        <a href="#" class="d-inline-block text-dark">
+          <strong>234</strong>
+          <span class="text-muted">followers</span>
+        </a>
+      </div>
+      {% if request.user.id != user.id %}
+      <div>
+        <a href="#" class="btn btn-success btn-sm">
+          Follow
+        </a>
+        <a href="#" class="btn btn-default icon-btn md-btn-flat btn-sm ml-1">
+          <i class="ion ion-md-mail"></i>
+        </a>
+      </div>
+      {% else %}
+      {% endif %}
+    </div>
+  </div>
+  <hr class="m-0">
+
+  <div class="container">
+    <div class="text-center py-5">
+      <img src="https://bootdey.com/img/Content/avatar/avatar6.png" alt class="ui-w-100 rounded-circle">
+
+      <div class="col-md-8 col-lg-6 col-xl-5 p-0 mx-auto">
+        <h4 class="font-weight-bold my-4">Mike Greene</h4>
+
+        <div class="text-muted mb-4">
+          Lorem ipsum dolor sit amet, nibh suavitate qualisque ut nam. Ad harum primis electram duo, porro principes ei has.
+        </div>
+      </div>
+
+      <div class="text-center">
+        <a href="#" class="btn icon-btn borderless btn-outline-twitter btn-lg btn-round">
+          <span class="ion ion-logo-twitter"></span>
+        </a>
+        <a href="#" class="btn icon-btn borderless btn-outline-facebook btn-lg btn-round">
+          <span class="ion ion-logo-facebook"></span>
+        </a>
+        <a href="#" class="btn icon-btn borderless btn-outline-instagram btn-lg btn-round">
+          <span class="ion ion-logo-instagram"></span>
+        </a>
+      </div>
+    </div>
+  </div>
+  <hr class="m-0">
+
+  <ul class="nav nav-tabs tabs-alt justify-content-center">
+    <li class="nav-item">
+      <a id="column" class="nav-link py-4" href="{% url 'column-list' id=user.id %}">Columns</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link py-4" href="#">Posts</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link py-4" href="#">Followers</a>
+    </li>
+  </ul>
+ 
+
+</div>
+<script src="{% static 'js/profile.js' %}"></script>
+{% endblock content %}

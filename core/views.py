@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.views.generic import ListView, CreateView
+from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
+from django.views.generic import CreateView
+from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
-from .models import Column
+from django.contrib.auth.decorators import login_required
+from .models import Column, User, Post
 from .forms import ColumnForm, PostForm
 
 class HomePageView(ListView):
@@ -33,4 +35,35 @@ class PostFormView(FormView):
         post.save()
         
         return super().form_valid(post)
+
+
+@login_required
+def account_profile(request, id):
+    user = get_object_or_404(User, id=id)
+    columns = Column.objects.filter(coordinator=user)
+    posts = Post.objects.filter(author=user)
+    
+    context = {
+        'user': user,
+        'columns': columns,
+        'posts': posts
+    }
+    if user:
+        return render(request, 'account/profile.html', context)
+    else:
+        return redirect('home')
+
+def column_list(request, id):
+    user = get_object_or_404(User, id=id)
+    columns = get_list_or_404(Column, coordinator=user)
+
+    context = {
+        'columns': columns
+    }
+
+    return render(request, 'column_list.html', context)
+
+
+
+
     

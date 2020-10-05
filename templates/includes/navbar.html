@@ -28,6 +28,9 @@
       </li>
       {% else %}
       <li class="nav-item">
+        <a class="nav-link" href="#"><i class="far fa-inbox"></i></a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="{% url 'account-profile' id=request.user.id %}">Account</a>
       </li>
       <li class="nav-item">

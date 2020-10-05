@@ -13,14 +13,23 @@
       <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more »</a></p>
     </div>
   </div>
-
+  <hr>
   {% for column in column_list %}
-    <h2 class="text-center">{{column.title}}</h2>    
-  <div id="carouselExampleIndicators" class="carousel slide pause" style="padding: 0 4rem" data-ride="carousel">
+  <h2 class="text-center">
+    {% if request.user in column.subscribers.all %}
+    
+    {% else %}
+    <a href="{% url 'subscribe' column_id=column.id %}" type="button" class="btn btn-primary btn-sm float-left ml-5">Subscribe</a>
+    {% endif %}
+    
+    {{column.title}}
+  </h2>
+    
+  <div id="carouselExampleIndicators{{column.id}}" class="carousel slide pause" style="padding: 0 4rem" data-ride="carousel">
     <ol class="carousel-indicators">
-      <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-      <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+      {% for post in column.posts.all %}
+        <li class="bg-dark" data-target="#carouselExampleIndicators{{column.id}}" data-slide-to="{{forloop.counter0}}" ></li>
+       {% endfor %} 
     </ol>
        
     <div class="carousel-inner px-20">
@@ -44,7 +53,9 @@
             <h3>{{ post.heading }}</h3>
             <p >{{ post.content|truncatewords:200 }}</p>
             <p>{{ post.author.username }}</p>
-            <p class="pl-5"><a class="btn btn-secondary"href="{% url 'post-detail' post_id=post.id %}" role="button">View details »</a></p>
+            <p class="pl-5">
+              <a class="btn btn-secondary"href="{% url 'post-detail' post_id=post.id %}" role="button">View details »</a>
+            </p>
           </div>
           <div class="col-lg-3 col-md-6"><img class=" "  src="https://picsum.photos/200" alt="First slide"></div>
         </div>   
@@ -54,24 +65,24 @@
     {% endfor %}
     </div>
     
-      <a class="carousel-control-prev " style="padding-right: 80px; padding-top: 100px;  display: inline-block;" href="#carouselExampleIndicators" role="button" data-slide="prev">
+      <a class="carousel-control-prev " style="padding-right: 80px; padding-top: 100px;  display: inline-block;" href="#carouselExampleIndicators{{column.id}}" role="button" data-slide="prev">
         <span class="carousel-control-prev-icon bg-danger"  aria-hidden="true"></span>
         <span class="sr-only">Previous</span>
       </a>
-      <a class="carousel-control-next "  style="padding-left: 70px; padding-top: 100px;  display: inline-block;" href="#carouselExampleIndicators" role="button" data-slide="next">
+      <a class="carousel-control-next "  style="padding-left: 70px; padding-top: 100px;  display: inline-block;" href="#carouselExampleIndicators{{column.id}}" role="button" data-slide="next">
         <span class="carousel-control-next-icon bg-danger"  aria-hidden="true"></span>
         <span class="sr-only">Next</span>
       </a>
     
     <hr>
-    </div>
+  </div>
     {% endfor %}
 
 
 </main>
 
 <footer class="container">
-  <p>© Company 2017-2020</p>
+  <p>© EmreD 2020</p>
 </footer>
 
   

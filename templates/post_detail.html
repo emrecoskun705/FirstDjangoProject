@@ -6,7 +6,7 @@
     <div class="row pt-3">
       <div class="col-md-7">
         <h2 class="text-center">{{ post.heading }}</h2>
-      <p class="">{{ post.content }}</p>
+      <h5 class="">{{ post.content }}</h5>
       <p class=""><small class="text-muted">Posted {{post.publish_date|timesince}} ago</small></p>
       <p class=""><strong class="text-muted">Author: {{ post.author }}</strong></p>
       </div>
@@ -28,8 +28,8 @@
     <div class="list-group mb-4">
       <a  class="list-group-item list-group-item-action flex-column align-items-start ">
         <div class="d-flex w-100 justify-content-between">
-          <h5 class="mb-1">{{ comment.content }}</h5>
-          <small>{{ comment.publish_date|timesince }}</small>
+          <h6 class="mb-1">{{ comment.content }}</h6>
+          <small>{{ comment.publish_date|timesince }} ago</small>
         </div>
         <small>By, {{comment.author}}</small>
       </a>

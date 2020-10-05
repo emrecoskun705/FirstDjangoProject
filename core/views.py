@@ -99,7 +99,11 @@ def post_detail(request, post_id):
 
     return render(request, 'post_detail.html', context)
 
-
+def subscribe(request, column_id):
+   column = get_object_or_404(Column, id=column_id)
+   column.subscribers.add(request.user)
+   column.save()
+   return redirect('home')
 
 
 

@@ -2,7 +2,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from core.views import HomePageView, ColumnFormView, PostFormView, account_profile, column_list, post_list, post_detail
+from core.views import (
+    HomePageView, 
+    ColumnFormView, 
+    PostFormView, 
+    account_profile, 
+    column_list, 
+    post_list, 
+    post_detail,
+    subscribe
+    )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -14,6 +23,7 @@ urlpatterns = [
     path('columns/column/<int:column_id>', post_list, name='post-list'),
     path('post/create/', PostFormView.as_view(), name='post-create'),
     path('posts/post/<int:post_id>', post_detail, name='post-detail'),
+    path('subscribe/<int:column_id>', subscribe, name='subscribe'),
 ]
 
 if settings.DEBUG:

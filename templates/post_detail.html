@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+  <section id="post-detail">
+    <div class="row pt-3">
+      <div class="col-md-7">
+        <h2 class="text-center">{{ post.heading }}</h2>
+      <p class="">{{ post.content }}</p>
+      <p class=""><small class="text-muted">Posted {{post.publish_date|timesince}} ago</small></p>
+      <p class=""><strong class="text-muted">Author: {{ post.author }}</strong></p>
+      </div>
+      <div class="col-md-5">
+        <img src="{{ post.image.url }}" style="width: 400px; height: 300px;" alt="">
+      </div>
+    </div>      
+  </section>
+  <br><hr><br>
+  <h3 class="text-center">Please share your ideas</h3>
+  <section id="comment">
+    <form method="POST">
+      {% csrf_token %}
+      {{ form|crispy }}
+      <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <hr>
+    {% for comment in comments %}
+    <div class="list-group mb-4">
+      <a  class="list-group-item list-group-item-action flex-column align-items-start ">
+        <div class="d-flex w-100 justify-content-between">
+          <h5 class="mb-1">{{ comment.content }}</h5>
+          <small>{{ comment.publish_date|timesince }}</small>
+        </div>
+        <small>By, {{comment.author}}</small>
+      </a>
+    </div>
+  {% endfor %}
+  </section>
+{% endblock content %}

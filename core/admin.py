@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User,Column,Post
+from .models import User, Column, Post, Comment
 
 @admin.register(User)
 class UserAdmin(admin.ModelAdmin):
@@ -8,3 +8,4 @@ admin.site.register(Column)
 
 
 admin.site.register(Post)
+admin.site.register(Comment)

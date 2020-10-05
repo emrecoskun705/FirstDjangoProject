@@ -30,9 +30,9 @@
         <div class="row">
           <div class="col-lg-9 col-md-6">
             <h3>{{ post.heading }}</h3>
-            <p >{{ post.content }}</p>
+            <p >{{ post.content|truncatewords:200 }}</p>
             <p>{{ post.author.username }}</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            <p class="pl-5"><a class="btn btn-secondary " href="{% url 'post-detail' post_id=post.id %}" role="button">View details »</a></p>
           </div>
           <div class="col-lg-3 col-md-6"><img class=" "  src="https://picsum.photos/200" alt="First slide"></div>
         </div>   
@@ -42,9 +42,9 @@
         <div class="row">
           <div class="col-lg-9 col-md-6">
             <h3>{{ post.heading }}</h3>
-            <p >{{ post.content }}</p>
+            <p >{{ post.content|truncatewords:200 }}</p>
             <p>{{ post.author.username }}</p>
-            <p><a class="btn btn-secondary" href="#" role="button">View details »</a></p>
+            <p class="pl-5"><a class="btn btn-secondary"href="{% url 'post-detail' post_id=post.id %}" role="button">View details »</a></p>
           </div>
           <div class="col-lg-3 col-md-6"><img class=" "  src="https://picsum.photos/200" alt="First slide"></div>
         </div>   

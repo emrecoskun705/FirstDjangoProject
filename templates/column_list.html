@@ -6,10 +6,10 @@
 
   {% for column in columns %}
   <div class="list-group mb-4">
-  <a href="#" class="list-group-item list-group-item-action flex-column align-items-start ">
+  <a href="{% url 'post-list' column_id=column.id %}" class="list-group-item list-group-item-action flex-column align-items-start ">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">{{ column.title }}</h5>
-      <small>3 days ago</small>
+      
     </div>
     <small>By, {{column.coordinator}}</small>
   </a>

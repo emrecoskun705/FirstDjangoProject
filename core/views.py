@@ -1,10 +1,13 @@
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
+from django.http import HttpResponseRedirect
 from django.views.generic import CreateView
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView
 from django.contrib.auth.decorators import login_required
-from .models import Column, User, Post
-from .forms import ColumnForm, PostForm
+from django.utils.timezone import utc
+from .models import Column, User, Post, Comment
+from .forms import ColumnForm, PostForm, CommentForm
+import datetime
 
 class HomePageView(ListView):
     context_object_name = 'column_list'
@@ -62,6 +65,40 @@ def column_list(request, id):
     }
 
     return render(request, 'column_list.html', context)
+
+def post_list(request, column_id):
+    column = get_object_or_404(Column, id=column_id)
+    now = datetime.datetime.now()
+    
+    context = {
+        'column': column,
+        'now': now
+    }
+
+    return render(request, 'post_list.html', context)
+
+@login_required
+def post_detail(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    form = CommentForm(request.POST or None)
+    comments = Comment.objects.filter(post=post)
+    if form.is_valid():
+        instance = form.save(commit=False)
+        
+        instance.author = request.user
+        
+        instance.post = post
+        instance.save()
+        return HttpResponseRedirect(request.path_info)
+
+    context = {
+        'post': post,
+        'form': form,
+        'comments': comments
+    }
+
+    return render(request, 'post_detail.html', context)
+
 
 
 

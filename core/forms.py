@@ -4,13 +4,14 @@ from .models import Column, Post, Comment
 class ColumnForm(forms.ModelForm):
     class Meta:
         model = Column
-        fields = ('title', 'posts', 'workers', 'subscribers')
+        fields = ('title',)
 
 
 class PostForm(forms.ModelForm):
+    
     class Meta:
         model = Post
-        exclude = ('author',)
+        fields = ('heading', 'content', 'image')
 
 class CommentForm(forms.ModelForm):
     content = forms.CharField(required=True, widget=forms.Textarea(attrs={

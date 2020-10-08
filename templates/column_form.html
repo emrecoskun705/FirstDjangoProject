@@ -2,9 +2,17 @@
 {% load crispy_forms_tags %}
 
 {% block content %}
+<div class="pt-3">
+  <h1 class="text-center">Create Column</h1>
+  <p>This page is for creating columns in this website.</p>
+  <p>Only coordinators can create columns.</p>
+  <p>If you have created a column, you can add moderators in your column.</p>
+  <p>Moderators can approve writer's posts.</p>
+  <p>Also you can add writer to your column.</p>
+</div>
 <form method="POST">
-    {% csrf_token %}
-    {{ form|crispy }}
-    <button type="submit" class="btn btn-primary">Submit</button>
+  {% csrf_token %}
+  {{ form|crispy }}
+  <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 {% endblock content %}

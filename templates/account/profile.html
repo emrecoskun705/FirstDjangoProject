@@ -2,7 +2,6 @@
 {% load static %}
 
 {% block content %}
-<link rel="stylesheet" href="{% static 'css/profile.css' %}">
 <div class="bg-white">
 
   <div class="container">
@@ -12,6 +11,12 @@
           <strong>234</strong>
           <span class="text-muted">followers</span>
         </a>
+        {% if user.coordinator %}
+        <a href="{% url 'column-create' %}" class="d-inline-block text-dark pl-3">
+          <span class="text-muted">Create Column</span>
+        </a>       
+        {% endif %}
+
       </div>
       {% if request.user.id != user.id %}
       <div>
@@ -69,5 +74,4 @@
  
 
 </div>
-<script src="{% static 'js/profile.js' %}"></script>
 {% endblock content %}

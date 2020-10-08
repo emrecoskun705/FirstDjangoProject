@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.db.models.signals import post_save
+from django.shortcuts import reverse
 
 class User(AbstractUser):
     
@@ -11,7 +12,7 @@ class User(AbstractUser):
 
 class Post(models.Model):
     heading = models.CharField(max_length=50)
-    content = models.TextField(max_length=500)
+    content = models.TextField(max_length=900)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     image = models.ImageField()
     publish_date = models.DateTimeField(auto_now_add=True)
@@ -34,6 +35,9 @@ class Column(models.Model):
             ('create_post', 'Create Post'),
             ('approve_post', 'Approve Post')
         )
+
+    def get_absolute_url(self):
+        return reverse('post-list', args=[self.id])
 
     def __str__(self):
         return self.title

@@ -1,8 +1,7 @@
 from django.shortcuts import render, redirect, get_list_or_404, get_object_or_404
 from django.http import HttpResponseRedirect
-from django.views.generic import CreateView
 from django.views.generic.list import ListView
-from django.views.generic.edit import FormView
+from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import utc
 from .models import Column, User, Post, Comment
@@ -27,17 +26,22 @@ class ColumnFormView(FormView):
         
         return super().form_valid(column)
         
-class PostFormView(FormView):
-    template_name = 'post_form.html'
-    form_class = PostForm
-    success_url = '/'
 
-    def form_valid(self, form):        
+@login_required
+def post_create_in_column(request, column_id):
+    form = PostForm(request.POST or None, request.FILES or None)
+    context = {
+        'form': form
+    }
+    if form.is_valid():
         post = form.save(commit=False)
-        post.author = self.request.user
+        post.author = request.user
         post.save()
-        
-        return super().form_valid(post)
+        column = get_object_or_404(Column, id=column_id)
+        column.posts.add(post)
+        column.save()
+        return redirect('home')
+    return render(request, 'post_form.html', context)
 
 
 @login_required
@@ -69,10 +73,10 @@ def column_list(request, id):
 def post_list(request, column_id):
     column = get_object_or_404(Column, id=column_id)
     now = datetime.datetime.now()
-    
+
     context = {
         'column': column,
-        'now': now
+        'now': now,
     }
 
     return render(request, 'post_list.html', context)
@@ -99,6 +103,7 @@ def post_detail(request, post_id):
 
     return render(request, 'post_detail.html', context)
 
+@login_required
 def subscribe(request, column_id):
    column = get_object_or_404(Column, id=column_id)
    column.subscribers.add(request.user)

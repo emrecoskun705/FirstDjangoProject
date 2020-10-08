@@ -3,11 +3,22 @@
 {% block content %}
 
 <div class="row">
-  <div class="card-group">
+  <div class="card-group ">
+  {% if request.user in column.workers.all %}
+  <div class="col-md-6" style="padding: 100px;">
+    <div class="card">
+      <div class="card-body text-center py-5">
+        <a href="{% url 'post-create' column_id=column.id %}"><i class="far fa-plus-square fa-10x" ></i></a>  
+      </div>
+    </div>
+  </div>
+  {% else %}
+  {% endif %}
+  
   {% for post in column.posts.all %}
     <div class="col-md-6 py-4">
       <div class="card">
-        <img class="" src="https://picsum.photos/200" alt="Card image cap">
+        <img class="" src="{{ post.image.url }}"  height="300" alt="Card image cap">
         <div class="card-body">
           <h5 class="card-title">{{ post.heading }}</h5>
           <p class="card-text">{{ post.content }}</p>

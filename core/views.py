@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.views.generic.list import ListView
 from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 from django.utils.timezone import utc
 from .models import Column, User, Post, Comment
 from .forms import ColumnForm, PostForm, CommentForm
@@ -15,11 +16,15 @@ class HomePageView(ListView):
 
 
 class ColumnFormView(FormView):
+    login_required= True
     template_name = 'column_form.html'
     form_class = ColumnForm
     success_url = '/'
 
     def form_valid(self, form):
+        if(not self.request.user.coordinator):
+            messages.warning(self.request, "You are not a coordinator")
+            return redirect('home')
         column = form.save(commit=False)
         column.coordinator = self.request.user
         column.save()
@@ -29,6 +34,10 @@ class ColumnFormView(FormView):
 
 @login_required
 def post_create_in_column(request, column_id):
+    if(not request.user in get_object_or_404(Column, id=column_id).workers.all()):
+        messages.warning(request, 'You are not a writer for this column.')
+        return redirect('home')
+
     form = PostForm(request.POST or None, request.FILES or None)
     context = {
         'form': form

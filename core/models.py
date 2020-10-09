@@ -32,6 +32,7 @@ class Column(models.Model):
 
     class Meta:
         permissions = (
+            ('create_column', 'Create Column'),
             ('create_post', 'Create Post'),
             ('approve_post', 'Approve Post')
         )

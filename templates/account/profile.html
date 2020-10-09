@@ -16,7 +16,9 @@
           <span class="text-muted">Create Column</span>
         </a>       
         {% endif %}
-
+        <a href="{% url 'post-list-user' id=request.user.id %}" class="d-inline-block text-dark pl-3">
+          <span class="text-muted"> Post List</span>
+        </a>       
       </div>
       {% if request.user.id != user.id %}
       <div>

@@ -110,6 +110,16 @@ def subscribe(request, column_id):
    column.save()
    return redirect('home')
 
+def post_list_for_user(request, id):
+    user = get_object_or_404(User, id=id)
+    posts = Post.objects.filter(author=user)
+
+    context = {
+        'posts': posts
+    }
+
+    return render(request, 'post_list_for_user.html', context)
+
 
 
     

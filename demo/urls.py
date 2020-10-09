@@ -11,7 +11,8 @@ from core.views import (
     post_list, 
     post_detail,
     subscribe,
-    post_create_in_column
+    post_create_in_column,
+    post_list_for_user
     )
 
 urlpatterns = [
@@ -19,6 +20,7 @@ urlpatterns = [
     path('', HomePageView.as_view(), name='home'),
     path('accounts/', include('allauth.urls')),
     path('accounts/profile/<int:id>/', account_profile, name='account-profile'),
+    path('accounts/profile/post-list/<int:id>' , post_list_for_user, name='post-list-user'),
     path('columns/<int:id>/', column_list, name='column-list'),
     path('columns/create/', ColumnFormView.as_view(), name='column-create'),
     path('columns/column/<int:column_id>/', post_list, name='post-list'),

@@ -1,21 +1,9 @@
 {% extends "base.html" %}
 
 {% block content %}
-
 <div class="row">
-  <div class="card-group ">
-  {% if request.user in column.workers.all or request.user == column.coordinator %}
-  <div class="col-md-6" style="padding: 100px;">
-    <div class="card">
-      <div class="card-body text-center py-5">
-        <a href="{% url 'post-create' column_id=column.id %}"><i class="far fa-plus-square fa-10x" ></i></a>  
-      </div>
-    </div>
-  </div>
-  {% else %}
-  {% endif %}
-  
-  {% for post in column.posts.all %}
+  <div class="card-group ">  
+  {% for post in posts %}
     <div class="col-md-6 py-4">
       <div class="card">
         <img class="" src="{{ post.image.url }}"  height="300" alt="Card image cap">
@@ -30,5 +18,4 @@
   {% endfor %}
   </div>
 </div>
-
 {% endblock content %}

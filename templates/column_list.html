@@ -3,17 +3,22 @@
 {% block content %}
 <h1 class="text-center pt-2">Columns</h1>
 
-
   {% for column in columns %}
-  <div class="list-group mb-4">
+  <div class="row  mb-4">
+  <div class="col-11">
   <a href="{% url 'post-list' column_id=column.id %}" class="list-group-item list-group-item-action flex-column align-items-start ">
     <div class="d-flex w-100 justify-content-between">
       <h5 class="mb-1">{{ column.title }}</h5>
-      
     </div>
     <small>By, {{column.coordinator}}</small>
   </a>
   </div>
+    {% if request.user == column.coordinator %}
+      <h5 class="col-1"><a href="{% url 'add-worker' column_id=column.id %}"><i class="far fa-plus-square fa-2x pt-3" ></i></a> </h5>
+      {% endif %}
+  </div>
+ 
+ 
   {% endfor %}
 
 

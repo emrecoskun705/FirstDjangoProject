@@ -12,7 +12,8 @@ from core.views import (
     post_detail,
     subscribe,
     post_create_in_column,
-    post_list_for_user
+    post_list_for_user,
+    add_worker_for_column
     )
 
 urlpatterns = [
@@ -24,6 +25,7 @@ urlpatterns = [
     path('columns/<int:id>/', column_list, name='column-list'),
     path('columns/create/', ColumnFormView.as_view(), name='column-create'),
     path('columns/column/<int:column_id>/', post_list, name='post-list'),
+    path('columns/column/workers/add/<int:column_id>/', add_worker_for_column, name='add-worker'),
     path('post/create/<int:column_id>/', post_create_in_column, name='post-create'),
     path('posts/post/<int:post_id>/', post_detail, name='post-detail'),
     path('subscribe/<int:column_id>/', subscribe, name='subscribe'),

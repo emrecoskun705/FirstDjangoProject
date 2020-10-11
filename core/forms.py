@@ -20,3 +20,12 @@ class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('content',)
+
+CHOICES = (
+    ('moderator', 'Moderator'),
+    ('writer', 'Writer')
+)
+
+class WorkerForm(forms.Form):
+    username = forms.CharField(required=True)
+    user_type = forms.ChoiceField(choices=CHOICES , widget=forms.RadioSelect, required=True)

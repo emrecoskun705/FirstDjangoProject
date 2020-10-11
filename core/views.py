@@ -5,8 +5,9 @@ from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.timezone import utc
+from guardian.shortcuts import assign_perm
 from .models import Column, User, Post, Comment
-from .forms import ColumnForm, PostForm, CommentForm
+from .forms import ColumnForm, PostForm, CommentForm, WorkerForm
 import datetime
 
 class HomePageView(ListView):
@@ -128,6 +129,34 @@ def post_list_for_user(request, id):
     }
 
     return render(request, 'post_list_for_user.html', context)
+
+def add_worker_for_column(request, column_id):
+    form = WorkerForm(request.POST or None)
+    column = get_object_or_404(Column, id=column_id)
+    if form.is_valid():
+        try:
+            user = User.objects.get(username=form.cleaned_data.get('username'))
+        except User.DoesNotExist:
+            messages.warning(request, 'User does not exist')
+            return HttpResponseRedirect(request.path_info)
+        
+        user_type = form.cleaned_data.get('user_type')
+
+        if user not in column.workers.all():
+            column.workers.add(user)
+            column.save()
+
+        if user.has_perm(user_type, column):
+            messages.warning(request, 'User has this permission already')
+            return HttpResponseRedirect(request.path_info)
+        assign_perm(user_type, user, column)
+        
+        messages.success(request, 'Permissons updated')
+        return redirect('column-list', id=request.user.id)
+    context = {
+        'form': form
+    }
+    return render(request, 'add_worker.html', context)
 
 
 

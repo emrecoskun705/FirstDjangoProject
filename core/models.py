@@ -33,8 +33,8 @@ class Column(models.Model):
     class Meta:
         permissions = (
             ('create_column', 'Create Column'),
-            ('create_post', 'Create Post'),
-            ('approve_post', 'Approve Post')
+            ('writer', 'Create Post'),
+            ('moderator', 'Approve Post')
         )
 
     def get_absolute_url(self):

@@ -5,6 +5,7 @@ from django.views.generic.edit import FormView, CreateView
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.utils.timezone import utc
+from django.db.models import Q
 from guardian.shortcuts import assign_perm
 from .models import Column, User, Post, Comment
 from .forms import ColumnForm, PostForm, CommentForm, WorkerForm
@@ -28,6 +29,10 @@ class ColumnFormView(FormView):
             return redirect('home')
         column = form.save(commit=False)
         column.coordinator = self.request.user
+        column.save()
+        column.workers.add(self.request.user)
+        column.save()
+        column.subscribers.add(self.request.user)
         column.save()
         
         return super().form_valid(column)
@@ -71,8 +76,11 @@ def account_profile(request, id):
         return redirect('home')
 
 def column_list(request, id):
+    '''
+        Columns for 
+    '''
     user = get_object_or_404(User, id=id)
-    columns = get_list_or_404(Column, coordinator=user)
+    columns = Column.objects.filter(Q(workers__in=[user]))
 
     context = {
         'columns': columns
@@ -83,10 +91,12 @@ def column_list(request, id):
 def post_list(request, column_id):
     column = get_object_or_404(Column, id=column_id)
     now = datetime.datetime.now()
-
+    user = get_object_or_404(User, id=request.user.id)
+    has_perm = user.has_perm('moderator', column)
     context = {
         'column': column,
         'now': now,
+        'has_perm': has_perm
     }
 
     return render(request, 'post_list.html', context)
@@ -158,6 +168,26 @@ def add_worker_for_column(request, column_id):
     }
     return render(request, 'add_worker.html', context)
 
+def post_approve(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    user = get_object_or_404(User, id=request.user.id)
+    if user.has_perm('moderator', post):
+        post.approved = 'A'
+        post.save()
+        messages.success(request, 'Post approved')
+        return redirect('home')
+    messages.warning(request, 'Invalid request')
+    return redirect('home')
 
+def post_reject(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    user = get_object_or_404(User, id=request.user.id)
+    if user.has_perm('moderator', post):
+        post.approved = 'R'
+        post.delete()
+        messages.success(request, 'Post rejected')
+        return redirect('home')
+    messages.warning(request, 'Invalid request')
+    return redirect('home')
 
     

@@ -9,6 +9,11 @@ class User(AbstractUser):
     #coordinators can create columns
     coordinator = models.BooleanField(default=False)
 
+POST_STATE_CHOICES = (
+    ('A', 'Approve Post'),
+    ('W', 'Waiting'),
+    ('R', 'Reject Post')
+)
 
 class Post(models.Model):
     heading = models.CharField(max_length=50)
@@ -18,6 +23,7 @@ class Post(models.Model):
     publish_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
 
+    approved = models.CharField(max_length=1, choices=POST_STATE_CHOICES, default='W')
 
     def __str__(self):
         return self.heading

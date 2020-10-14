@@ -13,7 +13,9 @@ from core.views import (
     subscribe,
     post_create_in_column,
     post_list_for_user,
-    add_worker_for_column
+    add_worker_for_column,
+    post_approve,
+    post_reject
     )
 
 urlpatterns = [
@@ -28,6 +30,8 @@ urlpatterns = [
     path('columns/column/workers/add/<int:column_id>/', add_worker_for_column, name='add-worker'),
     path('post/create/<int:column_id>/', post_create_in_column, name='post-create'),
     path('posts/post/<int:post_id>/', post_detail, name='post-detail'),
+    path('posts/post/approve/<int:post_id>/', post_approve, name='post-approve'),
+    path('posts/post/reject/<int:post_id>/', post_reject, name='post-reject'),
     path('subscribe/<int:column_id>/', subscribe, name='subscribe'),
 ]
 

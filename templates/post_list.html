@@ -1,5 +1,4 @@
 {% extends "base.html" %}
-
 {% block content %}
 
 <div class="row">
@@ -14,7 +13,7 @@
   </div>
   {% else %}
   {% endif %}
-  
+
   {% for post in column.posts.all %}
     <div class="col-md-6 py-4">
       <div class="card">
@@ -23,7 +22,15 @@
           <h5 class="card-title">{{ post.heading }}</h5>
           <p class="card-text">{{ post.content }}</p>
           <p class="card-text"><small class="text-muted">Posted {{post.publish_date|timesince}} ago</small></p>
-          <p class="card-text"><small class="text-muted">Author: {{ post.author }}</small></p>
+          <p class="card-text">
+            <small class="text-muted">Author: {{ post.author }}</small>
+            {% if post.approved == "W" and has_perm %}
+            <span class="float-right">
+              <a href="{% url 'post-approve' post_id=post.id %}" type="button" class="btn btn-primary btn-sm">Approve</a>
+              <a href="{% url 'post-reject' post_id=post.id %}" type="button" class="btn btn-danger btn-sm">Reject</a>
+            </span>
+            {% endif %}
+          </p>
         </div>
       </div>
     </div>

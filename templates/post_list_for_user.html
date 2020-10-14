@@ -1,8 +1,14 @@
 {% extends "base.html" %}
 
 {% block content %}
+  {% if not posts %}
+    <h1 class="text-center pt-3">There is no posts in this page</h1>
+    <h5>If you want to be a writer for a column.</h5>
+    <h5>You can contact one of our coordinators.</h5>
+  {% endif %}  
+
 <div class="row">
-  <div class="card-group ">  
+  <div class="card-group ">
   {% for post in posts %}
     <div class="col-md-6 py-4">
       <div class="card">
